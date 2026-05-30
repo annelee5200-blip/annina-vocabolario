@@ -1,6 +1,6 @@
 {
   "name": "Annina Vocabolario",
-  "short_name": "Vocabolario",
+  "short_name": "Annina Vocab",
   "description": "Annina's private Italian vocabulary practice space.",
   "start_url": "./index.html",
   "scope": "./",

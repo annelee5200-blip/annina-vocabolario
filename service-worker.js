@@ -1,4 +1,4 @@
-const CACHE_NAME = "annina-vocabolario-v20260530-icon";
+const CACHE_NAME = "annina-vocabolario-v20260530-name";
 
 const APP_ASSETS = [
   "./",
