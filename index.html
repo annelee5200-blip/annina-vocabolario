@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Annina Vocabolario</title>
+    <meta name="theme-color" content="#17122f">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+    <link rel="stylesheet" href="styles.css?v=20260530-final-icon">
+  </head>
+  <body>
+    <main class="phone-shell">
+      <section id="homeView" class="screen">
+        <header class="hero">
+          <button id="openSettings" class="settings-button" type="button" aria-label="Settings">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 8.4a3.6 3.6 0 1 0 0 7.2 3.6 3.6 0 0 0 0-7.2Z"></path>
+              <path d="M19.4 13.5a7.8 7.8 0 0 0 0-3l2-1.5-2-3.5-2.4 1a8.3 8.3 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.5A8.3 8.3 0 0 0 7 6.5l-2.4-1-2 3.5 2 1.5a7.8 7.8 0 0 0 0 3l-2 1.5 2 3.5 2.4-1a8.3 8.3 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a8.3 8.3 0 0 0 2.6-1.5l2.4 1 2-3.5-2-1.5Z"></path>
+            </svg>
+          </button>
+          <p class="eyebrow">// private midnight archive</p>
+          <h1>Annina<br>Vocabolario</h1>
+          <div class="signal-row" aria-label="词库统计">
+            <span><strong id="wordCount">0</strong> words</span>
+            <span><strong id="categoryCount">0</strong> folders</span>
+          </div>
+        </header>
+
+        <section class="finder-window" aria-labelledby="libraryTitle">
+          <div class="window-bar">
+            <div class="traffic" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <h2 id="libraryTitle">VOCAB FINDER</h2>
+          </div>
+          <div id="folderList" class="folder-list" aria-live="polite"></div>
+        </section>
+
+        <section class="ritual-window" aria-labelledby="ritualTitle">
+          <div class="window-bar">
+            <div class="traffic" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <h2 id="ritualTitle">MONTHLY RITUAL</h2>
+          </div>
+          <div class="ritual-body">
+            <div class="calendar-head">
+              <p id="monthLabel" class="eyebrow">this month</p>
+              <span id="monthSummary">0 days checked</span>
+            </div>
+            <div class="weekday-row" aria-hidden="true">
+              <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+            </div>
+            <div id="calendarGrid" class="calendar-grid" aria-label="每日打卡 calendar"></div>
+            <div class="infographic-grid">
+              <article class="ring-stat">
+                <div id="monthRing" class="month-ring">
+                  <div>
+                    <strong id="monthDaysCount">0</strong>
+                    <span>days</span>
+                  </div>
+                </div>
+                <p>tested this month</p>
+              </article>
+              <article class="book-stat">
+                <div class="learned-photo">
+                  <img src="assets/bruno-study.jpg" alt="" aria-hidden="true">
+                  <strong id="learnedWordsCount">0</strong>
+                </div>
+                <p>words learned</p>
+              </article>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section id="quizView" class="screen is-hidden">
+        <header class="quiz-top">
+          <button id="backHome" class="ghost-chip" type="button">BACK</button>
+          <div>
+            <p class="eyebrow">quiz mode</p>
+            <h2 id="quizTitle">Subfolder</h2>
+          </div>
+        </header>
+
+        <section class="quiz-window">
+          <div class="quiz-meter">
+            <span id="quizProgress">1 / 10</span>
+            <span id="quizScore">score 0</span>
+          </div>
+
+          <div id="quizCard" class="quiz-card">
+            <p>华语意思</p>
+            <strong id="questionMeaning"></strong>
+          </div>
+
+          <label class="answer-box">
+            <span>type italiano</span>
+            <input id="answerInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="scrivi qui...">
+          </label>
+
+          <div id="feedback" class="feedback" aria-live="polite"></div>
+
+          <div class="quiz-actions">
+            <button id="checkAnswer" class="primary-button" type="button">CHECK</button>
+            <button id="nextQuestion" class="secondary-button" type="button" disabled>NEXT</button>
+          </div>
+        </section>
+      </section>
+
+      <button id="openAddModal" class="float-add" type="button" aria-label="新增生词">+</button>
+    </main>
+
+    <dialog id="wordModal" class="modal">
+      <form id="wordForm" method="dialog" class="modal-card">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">add to archive</p>
+            <h2>新增生词</h2>
+          </div>
+          <button class="icon-button" id="closeWordModal" type="button" aria-label="关闭">×</button>
+        </div>
+
+        <label>
+          <span>大分类 folder</span>
+          <input id="categoryInput" list="categoryOptions" placeholder="例如：slang / 情绪表达" required>
+          <datalist id="categoryOptions"></datalist>
+        </label>
+
+        <label>
+          <span>小分类 subfolder</span>
+          <input id="subcategoryInput" list="subcategoryOptions" placeholder="例如：餐厅用语" required>
+          <datalist id="subcategoryOptions"></datalist>
+        </label>
+
+        <div class="mode-tabs" role="tablist" aria-label="录入模式">
+          <button id="singleMode" class="tab-button is-active" type="button">one word</button>
+          <button id="batchMode" class="tab-button" type="button">csv batch</button>
+        </div>
+
+        <div id="singleFields" class="mode-panel">
+          <label>
+            <span>华语意思</span>
+            <input id="meaningInput" placeholder="爱；爱情">
+          </label>
+          <label>
+            <span>意大利语</span>
+            <input id="italianInput" placeholder="amore">
+          </label>
+        </div>
+
+        <div id="batchFields" class="mode-panel is-hidden">
+          <label>
+            <span>CSV：第一列华语，第二列意大利语</span>
+            <textarea id="csvInput" rows="7" placeholder="爱,amore&#10;吃,mangiare&#10;咖啡,caffè"></textarea>
+          </label>
+        </div>
+
+        <button class="primary-button wide" type="submit">SAVE TO FOLDER</button>
+      </form>
+    </dialog>
+
+    <dialog id="manageModal" class="modal">
+      <form method="dialog" class="modal-card">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">folder control</p>
+            <h2 id="manageTitle">编辑分类</h2>
+          </div>
+          <button class="icon-button" id="closeManageModal" type="button" aria-label="关闭">×</button>
+        </div>
+
+        <div id="manageBody" class="manage-body"></div>
+      </form>
+    </dialog>
+
+    <dialog id="confirmModal" class="modal confirm-modal">
+      <form method="dialog" class="modal-card">
+        <h2 id="confirmTitle">确定吗？</h2>
+        <p id="confirmMessage"></p>
+        <div class="confirm-actions">
+          <button id="confirmNo" class="secondary-button" type="button">NO</button>
+          <button id="confirmYes" class="danger-button" type="button">YES</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="brunoModal" class="modal bruno-modal">
+      <form method="dialog" class="modal-card bruno-card">
+        <p class="eyebrow">Bruno's Message</p>
+        <h2 id="brunoMessage"></h2>
+        <img id="brunoImage" src="" alt="" class="bruno-pixel">
+        <button id="closeBrunoModal" class="primary-button wide" type="button">CONTINUE</button>
+      </form>
+    </dialog>
+
+    <dialog id="settingsModal" class="modal">
+      <form method="dialog" class="modal-card settings-card">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">local archive</p>
+            <h2>Settings</h2>
+          </div>
+          <button class="icon-button" id="closeSettings" type="button" aria-label="关闭">×</button>
+        </div>
+
+        <section class="settings-section">
+          <h3>Data Management</h3>
+          <button id="backupApp" class="primary-button wide" type="button">Backup My App</button>
+          <button id="restoreApp" class="secondary-button wide" type="button">Restore From Backup</button>
+          <input id="restoreFile" class="is-hidden" type="file" accept="application/json,.json">
+          <p class="settings-note">换手机前请先 backup。资料只保存在这台设备和这个浏览器里。</p>
+        </section>
+
+        <section class="settings-section">
+          <h3>Storage Info</h3>
+          <p id="storageInfo" class="settings-note">Saved locally on this device.</p>
+        </section>
+      </form>
+    </dialog>
+
+    <script src="app.js?v=20260530-final-icon"></script>
+    <script>
+      if ("serviceWorker" in navigator && window.isSecureContext) {
+        navigator.serviceWorker.register("./service-worker.js");
+      }
+    </script>
+  </body>
+</html>
